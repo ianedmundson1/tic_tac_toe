@@ -39,12 +39,13 @@ def make_a_turn(board, symbol):
 def check_board_new(board, symbol):
   
   check_tie, winList = check_for_tie(board)
-  if check_for_tie(board) == True:
+  if check_tie == True:
     print(' ')
     print('Its a tie')
     return True, winList
  
-  if check_for_win(board, symbol) == True:
+  check_win, winList = check_for_win(board, symbol)
+  if check_win == True:
     print('')
     print('its a win')
     return True, winList
