@@ -2,32 +2,37 @@ import random
 from function_tik import *
 
 # empty matrix for board
-Board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-check = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 
-n = 0
-s = 5
-a = 0
+win = False
 # Game starts
 print("Welcome to Tic Tac Toe!")
-while n == 0:
-    # check for winners
-  n, s = check_board(check, n)
-  # have computer take turn
-  if n == 0:
-    print('Computers turn to move')
 
-    Board, check, s = computers_turn(Board, check,s)
+while win == False:
+
+  for symbol in ['x','o']:
     
-    print_Board(Board)
-  
-    a = a + 1
-    if a == 5:
-      print("It's a Draw!!!")
-      n += 1
+    win, winList = check_board_new(board, symbol)
+
+    if win == False:
+
+      Board = make_a_turn(board, symbol)
+
+    else: 
+
+      dic = {'diag1':winList[0], 
+              'diag2':winList[1],
+              'row1':winList[2], 
+              'row2':winList[3],
+              'row3':winList[4],
+              'col1':winList[5],
+              'col2':winList[6],
+              'col3':winList[7]}
+      
+      print(dic)
       break
-  
-    # start useres turn
-    while s < 0:
-        # Take user input
-        Board, check, s = players_turn(Board, check,s)
+    
+    print_Board(board)
+    
+    
+print("game is over")
