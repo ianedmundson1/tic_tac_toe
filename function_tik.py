@@ -6,7 +6,7 @@ def print_Board(Board):
   print('---------')
   # loop meant for finishing board
   for point in range(3):
-      print(" |{:s}|{:s}|{:s}|".format(Board[point][0], Board[point][1], Board[point][2]))
+      print(" |{:s}|{:s}|{:s}|".format(str(Board[point][0]), str(Board[point][1]), str(Board[point][2])))
       print('---------')
   return 0
 
@@ -18,14 +18,14 @@ def make_a_turn(board, symbol):
 
   while check == True:
     # Have computer choose spot randomly
-      pick1 = random.randint(0, 2)
-      pick2 = random.randint(0, 2)
+      row = random.randint(0, 2)
+      col = random.randint(0, 2)
   
       
         # check if spot has been used before
-      if check_board[pick1][pick2] == 0:
+      if check_board[row][col] == 0:
 
-        board[pick1][pick2] = symbol
+        board[row][col] = symbol
 
         check = False
       else:
@@ -33,22 +33,22 @@ def make_a_turn(board, symbol):
         pass
         
   
-  return board
+  return board, row, col
 
 
 def check_board_new(board, symbol):
   
-  check_tie, winList = check_for_tie(board)
-  if check_tie == True:
-    print(' ')
-    print('Its a tie')
-    return True, winList
- 
   check_win, winList = check_for_win(board, symbol)
   if check_win == True:
     print('')
     print('its a win')
-    return True, winList
+    return 'tie', winList
+ 
+  check_tie, winList = check_for_tie(board)
+  if check_tie == True:
+    print(' ')
+    print('Its a tie')
+    return 'win', winList
   
   return False, winList
 
@@ -78,8 +78,9 @@ def check_for_tie(board):
 
 def check_for_win(board, symbol):
 
-  board = [[0 if element == " " or element == opposite_symbol(symbol) else 1 for element in row] for row in board]
+  board = [[0 if element == " " or element == symbol else 1 for element in row] for row in board]
 
+  print_Board(board)
   winList = get_win_check(board)
 
   for spot in range(8):
